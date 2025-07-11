@@ -25,14 +25,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-qn(q6ay5l@25^8a9q2eiguizf$ph#*jb0ds51d#n7&3w$zva6$"
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-qn(q6ay5l@25^8a9q2eiguizf$ph#*jb0ds51d#n7&3w$zva6$')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False  # Change to False for production
 
-ALLOWED_HOSTS = ['ecommerce-website-production-ada7.up.railway.app', 'https://ecommerce-website-production-ada7.up.railway.app']
+ALLOWED_HOSTS = ['ecommerce-website-production-ada7.up.railway.app', 'localhost', '127.0.0.1']
 CSRF_TRUSTED_ORIGINS = ['https://ecommerce-website-production-ada7.up.railway.app']
-
 
 # Application definition
 
@@ -86,15 +85,12 @@ WSGI_APPLICATION = "ecom.wsgi.application"
 
 DATABASES = {
     "default": {
-        #"ENGINE": "django.db.backends.sqlite3",
-        #"NAME": BASE_DIR / "db.sqlite3",
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": 'railway',
-        "USER": 'postgres',
-        "PASSWORD": os.environ['DB_PASSWORD_YO'],
-        "HOST": 'shuttle.proxy.rlwy.net',
-        "PORT": '45750',
-        
+        "NAME": os.environ.get('PGDATABASE', 'railway'),
+        "USER": os.environ.get('PGUSER', 'postgres'),
+        "PASSWORD": os.environ.get('PGPASSWORD', os.environ.get('DB_PASSWORD_YO', '')),
+        "HOST": os.environ.get('PGHOST', 'shuttle.proxy.rlwy.net'),
+        "PORT": os.environ.get('PGPORT', '45750'),
     }
 }
 
@@ -133,14 +129,19 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = "static/"
-STATICFILES_DIRS = ['static/']
+# Static files (CSS, JavaScript, Images)
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# White noise Static Staff
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-STATIC_ROOT = BASE_DIR / "staticfiles"
+# Only use STATICFILES_DIRS if you have a 'static' directory in your project root
+# Comment out or remove this line if the 'static' directory doesn't exist:
+# STATICFILES_DIRS = ['static/']
 
-MEDIA_URL = 'media/'
+# WhiteNoise configuration
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Media files
+MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
