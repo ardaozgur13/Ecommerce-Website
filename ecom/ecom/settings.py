@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import os
-import load_dotenv
+from dotenv import load_dotenv
 
 # Load our enviromental variables
 load_dotenv()
@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "store",
     "cart",
     "payment",
+    "whitenoise.runserver_nostatic",
 ]
 
 MIDDLEWARE = [
@@ -55,6 +56,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 ROOT_URLCONF = "ecom.urls"
@@ -86,11 +88,12 @@ DATABASES = {
         #"ENGINE": "django.db.backends.sqlite3",
         #"NAME": BASE_DIR / "db.sqlite3",
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "railway",
-        "USER": "postgres",
+        "NAME": 'railway',
+        "USER": 'postgres',
         "PASSWORD": os.environ.get('DB_PASSWORD_YO'),
-        "HOST": "postgres.railway.internal",
-        "PORT": "5432",
+        "HOST": 'shuttle.proxy.rlwy.net',
+        "PORT": '45750',
+        
     }
 }
 
@@ -131,6 +134,10 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 STATICFILES_DIRS = ['static/']
+
+# White noise Static Staff
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
