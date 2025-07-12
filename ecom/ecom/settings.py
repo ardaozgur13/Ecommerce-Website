@@ -19,7 +19,7 @@ load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+DB_PASSWORD_YO = os.environ['DB_PASSWORD_YO']
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
@@ -30,8 +30,9 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-qn(q6ay5l@25^8a9q2eig
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False  # Change to False for production
 
-ALLOWED_HOSTS = ["*"]
-#CSRF_TRUSTED_ORIGINS = [""]
+ALLOWED_HOSTS = ['ecommerce-website-production-4aff.up.railway.app', 'https://ecommerce-website-production-4aff.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['https://ecommerce-website-production-4aff.up.railway.app']
+
 
 # Application definition
 
@@ -45,18 +46,18 @@ INSTALLED_APPS = [
     "store",
     "cart",
     "payment",
-    "whitenoise.runserver_nostatic",
+    'whitenoise.runserver_nostatic',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = "ecom.urls"
@@ -85,12 +86,15 @@ WSGI_APPLICATION = "ecom.wsgi.application"
 
 DATABASES = {
     'default': {
+        #'ENGINE': 'django.db.backends.sqlite3',
+        #'NAME': BASE_DIR / 'db.sqlite3',
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get("PGDATABASE"),
-        'USER': os.environ.get("PGUSER"),
-        'PASSWORD': os.environ.get("PGPASSWORD"),
-        'HOST': os.environ.get("PGHOST"),
-        'PORT': os.environ.get("PGPORT"),
+        'NAME': 'railway',
+        'USER': 'postgres',
+        'PASSWORD': os.environ['DB_PASSWORD_YO'],
+        'HOST': 'shuttle.proxy.rlwy.net',
+        'PORT': '45750'
+        
     }
 }
 
@@ -130,22 +134,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 # Static files (CSS, JavaScript, Images)
-# Static files (CSS, JavaScript, Images)
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = 'static/'
+STATICFILES_DIRS = ['static/']
 
-# Only add STATICFILES_DIRS if you have a 'static' directory
-if os.path.exists(os.path.join(BASE_DIR, 'static')):
-    STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-
-# WhiteNoise configuration
+# White noise static stuff
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-#STORAGES = {
-#    # ...
-#    "staticfiles": {
-#        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-#    },
-#}
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
 
 
 # Media files
