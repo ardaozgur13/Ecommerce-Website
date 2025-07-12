@@ -30,7 +30,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-qn(q6ay5l@25^8a9q2eig
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False  # Change to False for production
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ['ecommerce-website-production-3501.up.railway.app','https://ecommerce-website-production-3501.up.railway.app']
 CSRF_TRUSTED_ORIGINS = ['https://ecommerce-website-production-3501.up.railway.app']
 
 # Application definition
@@ -130,7 +130,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 # Static files (CSS, JavaScript, Images)
-STATIC_URL = "/static/"
+STATIC_URL = "static/"
 STATICFILES_DIRS = ["static/"]
 
 # Only use STATICFILES_DIRS if you have a 'static' directory in your project root
@@ -139,18 +139,18 @@ STATICFILES_DIRS = ["static/"]
 
 
 # WhiteNoise configuration
-#STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-STORAGES = {
-    # ...
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-    },
-}
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+#STORAGES = {
+#    # ...
+#    "staticfiles": {
+#        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+#    },
+#}
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
 
 # Media files
-MEDIA_URL = '/media/'
+MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
