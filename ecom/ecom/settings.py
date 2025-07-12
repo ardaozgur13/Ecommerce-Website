@@ -93,7 +93,7 @@ DATABASES = {
         'USER': 'postgres',
         'PASSWORD': os.environ['DB_PASSWORD_YO'],
         'HOST': 'shuttle.proxy.rlwy.net',
-        'PORT': '45750'
+        'PORT': '5432'
         
     }
 }
