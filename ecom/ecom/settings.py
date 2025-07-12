@@ -31,6 +31,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-qn(q6ay5l@25^8a9q2eig
 DEBUG = False  # Change to False for production
 
 ALLOWED_HOSTS = ["*"]
+#CSRF_TRUSTED_ORIGINS = [""]
 
 # Application definition
 
@@ -129,8 +130,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 # Static files (CSS, JavaScript, Images)
-STATIC_URL = "static/"
-STATICFILES_DIRS = ["static/"]
+STATIC_URL = 'static/'
+
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
 # Only use STATICFILES_DIRS if you have a 'static' directory in your project root
 # Comment out or remove this line if the 'static' directory doesn't exist:
@@ -145,7 +148,6 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 #        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
 #    },
 #}
-STATIC_ROOT = BASE_DIR / "staticfiles"
 
 
 # Media files
